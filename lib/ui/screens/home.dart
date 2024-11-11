@@ -4,7 +4,6 @@ import 'package:shop/ui/widgets/product_item_card.dart';
 import 'package:shop/services/api_service.dart';
 import 'package:get_it/get_it.dart';
 
-
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -13,7 +12,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+          padding: const EdgeInsets.all(20.0),
           child: FutureBuilder<List<Product>>(
             future: GetIt.instance<ApiService>().fetchProducts(),
             builder: (context, snapshot) {

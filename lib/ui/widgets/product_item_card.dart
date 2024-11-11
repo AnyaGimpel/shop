@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop/blocs/product_cubit.dart';
 import 'package:shop/models/product.dart';
-
-
+import 'package:shop/ui/screens/product_detail_page.dart';
 
 class ProductItemCard extends StatelessWidget {
   final Product product;
@@ -12,10 +12,25 @@ class ProductItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {}, 
+    double cardWidth = MediaQuery.of(context).size.width / 2 - 15;
+
+    double imageHeight = cardWidth * 0.5; 
+    double textFontSize = cardWidth * 0.07; 
+    double buttonPadding = cardWidth * 0.1;
+    double buttonHeight = cardWidth * 0.15;
+
+    return GestureDetector(
+      onTap: () {
+        context.read<ProductCubit>().selectProduct(product);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProductDetailPage(),
+          ),
+        );
+      },
       child: Container(
+        padding: EdgeInsets.zero,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -32,62 +47,75 @@ class ProductItemCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: CachedNetworkImage(
-                  imageUrl: product.image,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()), // Индикатор загрузки
-                  errorWidget: (context, url, error) => const Icon(Icons.error), // Виджет на случай ошибки
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: imageHeight, 
+                    maxWidth: double.infinity,
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: product.image,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
                 ),
               ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        product.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Colors.black,
-                        ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      product.title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: textFontSize, 
+                        color: Colors.black,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '\$${product.price}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '\$${product.price}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: textFontSize * 0.8,
+                        color: Colors.grey,
                       ),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: buttonPadding),
+                      child: ElevatedButton(
                         onPressed: () {
                           // Действие при нажатии на кнопку
                         },
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30),
+                          padding: EdgeInsets.zero,
                           backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          minimumSize: const Size(0, 30),
+                          minimumSize: Size(double.infinity, buttonHeight),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Add to cart',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: textFontSize,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
