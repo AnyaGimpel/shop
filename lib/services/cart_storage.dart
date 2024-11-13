@@ -21,16 +21,28 @@ class CartStorage {
     return [];
   }
 
-  Future<void> addItem(int productId, int quantity) async {
+  Future<void> addItem(int productId, String title, String thumbnail, double price, int quantity) async {
     final items = await loadCartItems();
     final index = items.indexWhere((item) => item.productId == productId);
 
     if (index != -1) {
       // Если товар уже есть в корзине, обновляем его количество
-      items[index] = CartItem(productId: productId, quantity: items[index].quantity + quantity);
+      items[index] = CartItem(
+        productId: productId, 
+        title: title,
+        thumbnail: thumbnail,
+        price: price,
+        quantity: items[index].quantity + quantity,
+      );
     } else {
       // Если товара нет в корзине, добавляем новый
-      items.add(CartItem(productId: productId, quantity: quantity));
+      items.add(CartItem(
+        productId: productId,
+        title: title,
+        thumbnail: thumbnail,
+        price: price,
+        quantity: quantity,
+      ));
     }
     await saveCartItems(items);
   }
@@ -51,7 +63,13 @@ class CartStorage {
     if (index != -1) {
       final newQuantity = items[index].quantity + change;
       if (newQuantity > 0) {
-        items[index] = CartItem(productId: productId, quantity: newQuantity);
+        items[index] = CartItem(
+          productId: items[index].productId,
+          title: items[index].title,
+          thumbnail: items[index].thumbnail,
+          price: items[index].price, 
+          quantity: newQuantity
+        );
       } else {
         items.removeAt(index); // Удаление товара из корзины, если количество стало 0
       }

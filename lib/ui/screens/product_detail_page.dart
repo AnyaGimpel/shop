@@ -101,7 +101,13 @@ class ProductDetailPage extends StatelessWidget {
                           horizontal: 40, vertical: 10),
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<CartCubit>().addItem(product.id, 1);
+                          context.read<CartCubit>().addItem(
+                            product.id, 
+                            product.title,
+                            product.thumbnail,
+                            product.price,
+                            1,
+                          );
                           print('${product.title} добавлен в корзину!');
                         },
                         style: ElevatedButton.styleFrom(
