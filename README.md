@@ -100,5 +100,6 @@ Use the following command to start the app:
 flutter run
 ```
 Alternatively, in Android Studio or VS Code, open the project folder and click Run or Debug to deploy on the device/emulator.
-You’re all set!
+
+## You’re all set!
 
