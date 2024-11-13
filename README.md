@@ -1,6 +1,16 @@
 # E-commerce Mobile App on Flutter
 
-![App Screenshots](assets/images/app_screenshot.png)
+![App Screenshots](assets/images/app_screens.jpg)
+
+## Table of Contents
+
+- [Project Description](#project-description)
+- [Key Features](#key-features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Cloning the Repository](#cloning-the-repository)
+  - [Running the Application](#running-the-application)
 
 ## Project Description
 
