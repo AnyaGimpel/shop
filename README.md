@@ -1,4 +1,4 @@
-# E-commerce Mobile App on Flutter
+# Mobile App for Online Store on Flutter
 
 ![App Screenshots](assets/images/app_screens.jpg)
 
