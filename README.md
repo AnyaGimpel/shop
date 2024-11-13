@@ -69,5 +69,26 @@ Ensure you have the following installed:
 Clone the project repository with:
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/AnyaGimpel/shop.git
+```
+
+## Running the Application
+
+Navigate into the project folder:
+
+```bash
+cd shop
+```
+Run the following command to install project dependencies:
+```bash
+flutter pub get
+```
+Start an Emulator
+
+Use the following command to start the app:
+```bash
+flutter run
+```
+Alternatively, in Android Studio or VS Code, open the project folder and click Run or Debug to deploy on the device/emulator.
+You’re all set!
 
