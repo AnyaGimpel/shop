@@ -19,9 +19,9 @@ class Home extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return const Center(child: Text('The page cannot load, check your internet connection'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No products found.'));
+                return const Center(child: Text('No products found'));
               } else {
                 return GridView.builder(
                   itemCount: snapshot.data!.length,

@@ -153,7 +153,6 @@ class ProductDetailPage extends StatelessWidget {
                                         product.price,
                                         1,
                                       );
-                                  print('${product.title} добавлен в корзину!');
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange,

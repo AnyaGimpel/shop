@@ -15,15 +15,15 @@ class QuantitySelector extends StatelessWidget {
     required this.onIncrement,
     required this.onDecrement,
     required this.onRemoveItem,
-    this.buttonSize = 30.0, // Значение по умолчанию
-    this.textSize = 16.0,   // Значение по умолчанию
-    this.spacing = 8.0,     // Значение по умолчанию
+    this.buttonSize = 30.0, 
+    this.textSize = 16.0,   
+    this.spacing = 8.0,     
   });
 
   @override
   Widget build(BuildContext context) {
     return FittedBox(
-      fit: BoxFit.scaleDown, // Адаптация размера под контейнер
+      fit: BoxFit.scaleDown, 
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -44,12 +44,12 @@ class QuantitySelector extends StatelessWidget {
               onPressed: onDecrement,
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
             quantity.toString(),
             style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Container(
             width: buttonSize,
             height: buttonSize,
@@ -67,7 +67,7 @@ class QuantitySelector extends StatelessWidget {
               onPressed: onIncrement,
             ),
           ),
-          SizedBox(width: spacing),  // Добавляем дополнительный отступ между кнопками
+          SizedBox(width: spacing),  
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: onRemoveItem,

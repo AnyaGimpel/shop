@@ -9,17 +9,25 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: BlocBuilder<CartCubit, List<CartItem>>(
         builder: (context, cartItems) {
-          return ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              final item = cartItems[index];
-              return CartItemCard(item: item); 
-            },
-          );
+          if (cartItems.isEmpty) {
+            return const Center(
+              child: Text(
+                'Your cart is empty',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                final item = cartItems[index];
+                return CartItemCard(item: item); 
+              },
+            );
+          }
         },
       ),
     );

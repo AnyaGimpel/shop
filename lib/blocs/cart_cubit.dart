@@ -31,7 +31,6 @@ class CartCubit extends Cubit<List<CartItem>> {
 
   Future<void> addItem(int productId, String title, String thumbnail, double price, int quantity) async {
     await _storage.addItem(productId, title, thumbnail, price, quantity);
-    print('Товар с ID: $productId успешно добавлен в корзину с количеством $quantity');
     await loadCart();  // Перезагружаем корзину после добавления товара
   }
 
