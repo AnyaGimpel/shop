@@ -24,7 +24,7 @@ This Flutter-based mobile application is designed for an e-commerce store, allow
 
 ### State Management with Cubit
 
-- **Cubit Pattern**: Cubit manages the application’s state, including catalog display, detailed product view, and cart state management.
+- **Cubit Pattern**: `Cubit` manages the application’s state, including catalog display, detailed product view, and cart state management.
 
 ### Dependency Injection
 
