@@ -47,4 +47,27 @@ This Flutter-based mobile application is designed for an e-commerce store, allow
 - **Responsive Design**: The application’s design supports various screen resolutions, ensuring an optimal and consistent experience on both smartphones and tablets. Adaptive controls and font adjustments make interaction comfortable on all screen sizes.
 
 ---
+## Getting Started
+
+This guide will help you set up the environment, clone the repository, and run the Flutter-based e-commerce application on your local machine.
+
+### Prerequisites
+
+Ensure you have the following installed:
+1. **Flutter SDK**: [Install Flutter](https://docs.flutter.dev/get-started/install) following the official guide.
+   - Add Flutter to your system path for easy access.
+   - Verify your setup by running:
+     ```bash
+     flutter doctor
+     ```
+2. **Android Studio** or **Visual Studio Code**:
+   - **Android Studio** for Android Emulator or **VS Code** with Flutter/Dart extensions.
+3. **Device for Testing**: Set up an Android Emulator or connect a physical Android device with USB debugging enabled.
+
+### Cloning the Repository
+
+Clone the project repository with:
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
 
