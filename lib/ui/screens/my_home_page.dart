@@ -25,7 +25,10 @@ class MyHomePage extends StatelessWidget {
         title: Text(_titles[context.watch<NavigationCubit>().state]),
       ),
       body: _screens[context.watch<NavigationCubit>().state],
-      bottomNavigationBar: const CustomBottomNavigationBar(),
+      bottomNavigationBar: const SafeArea(
+        top: false, 
+        child: CustomBottomNavigationBar(),
+      ),
     );
   }
 }

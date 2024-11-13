@@ -58,7 +58,7 @@ class CartItemCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$${fullPrice.toStringAsFixed(2)}',
+                  'Total price: \$${fullPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,

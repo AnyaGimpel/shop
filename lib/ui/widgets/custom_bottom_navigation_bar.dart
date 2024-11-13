@@ -52,7 +52,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Icon(icon),
-          if (showCartIndicator) const CartIndicator(count: '1'),
+          if (showCartIndicator) const CartIndicator(),
         ],
       ),
       label: label,

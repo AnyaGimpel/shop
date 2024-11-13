@@ -5,7 +5,9 @@ import '../services/cart_storage.dart';
 class CartCubit extends Cubit<List<CartItem>> {
   final CartStorage _storage;
 
-  CartCubit(this._storage) : super([]);  // Начальное состояние - пустой список
+  CartCubit(this._storage) : super([]){
+    loadCart(); 
+  } 
 
   Future<void> loadCart() async {
     final items = await _storage.loadCartItems();
@@ -32,4 +34,21 @@ class CartCubit extends Cubit<List<CartItem>> {
     print('Товар с ID: $productId успешно добавлен в корзину с количеством $quantity');
     await loadCart();  // Перезагружаем корзину после добавления товара
   }
+
+  int getProductQuantityInCart(int productId) {
+    final item = state.firstWhere(
+      (cartItem) => cartItem.productId == productId,
+      orElse: () => CartItem(productId: productId, title: '', thumbnail: '', price: 0, quantity: 0),
+    );
+    return item.quantity;
+  }
+
+  bool isProductInCart(int productId) {
+    return state.any((cartItem) => cartItem.productId == productId);
+  }
+
+  int getTotalQuantity() {
+    return state.fold(0, (total, item) => total + item.quantity);
+  }
+
 }
