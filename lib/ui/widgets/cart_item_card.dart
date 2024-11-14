@@ -5,6 +5,7 @@ import 'package:shop/models/cart_item.dart';
 import 'package:shop/blocs/cart_cubit.dart';
 import 'package:shop/ui/widgets/quantity_selector.dart';
 
+/// Displays an item in the cart with image, title, price, and quantity control.
 class CartItemCard extends StatelessWidget {
   final CartItem item;
 
@@ -12,6 +13,7 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Calculate total price of the item based on quantity.
     double fullPrice = item.price * item.quantity;
 
     return Container(
@@ -22,6 +24,7 @@ class CartItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
+            // Shadow effect for the card container
             color: Colors.black.withOpacity(0.1),
             spreadRadius: 2,
             blurRadius: 10,
@@ -29,6 +32,8 @@ class CartItemCard extends StatelessWidget {
           ),
         ],
       ),
+
+      // Main row layout for image, title, and quantity controls.
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,11 +44,15 @@ class CartItemCard extends StatelessWidget {
               width: 80,
               height: 80,
               fit: BoxFit.cover,
+              // Display a loading indicator while the image is being loaded.
               placeholder: (context, url) => const Center(child: CircularProgressIndicator()), 
+              // Show a fallback icon if the image fails to load.
               errorWidget: (context, url, error) => const Icon(Icons.image_not_supported), 
             ),
           ),
           const SizedBox(width: 16),
+
+          // Flexible section that holds the title and controls.
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +66,8 @@ class CartItemCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
+
+                // Display the total calculated price for the item (price * quantity).
                 Text(
                   'Total price: \$${fullPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
@@ -68,13 +79,17 @@ class CartItemCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: QuantitySelector(
+                    // Current quantity of the item in the cart.
                     quantity: item.quantity,
+                    // Callback for incrementing the item quantity in the cart.
                     onIncrement: () {
                       context.read<CartCubit>().incrementItem(item.productId, item.title, item.thumbnail, item.price);
                     },
+                    // Callback for decrementing the item quantity in the cart.
                     onDecrement: () {
                       context.read<CartCubit>().decrementItem(item.productId);
                     },
+                    // Callback for removing the item from the cart.
                     onRemoveItem: () {
                       context.read<CartCubit>().removeItem(item.productId);
                     },

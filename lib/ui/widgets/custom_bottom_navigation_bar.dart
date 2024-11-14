@@ -4,6 +4,7 @@ import '../../blocs/navigation_cubit.dart';
 import 'cart_indicator.dart';
 import 'white_rounded_container.dart';
 
+/// Custom bottom navigation bar widget with navigation and cart indicator.
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
 
@@ -15,8 +16,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
           height: 60, 
           child: WhiteRoundedContainer(
             child: BottomNavigationBar(
-              currentIndex: selectedIndex,
+              // Set the selected index based on the current state
+              currentIndex: selectedIndex, 
               onTap: (index) {
+                // Update the selected index in the state
                 context.read<NavigationCubit>().setScreen(index);
               },
               items: [
@@ -27,6 +30,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 _buildNavigationBarItem(
                   icon: Icons.shopping_cart,
                   label: 'Cart',
+                  // Shows the cart indicator 
                   showCartIndicator: true,
                 ),
               ],
@@ -42,6 +46,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     );
   }
 
+  /// Helper function to create a navigation bar item with an optional cart indicator.
   BottomNavigationBarItem _buildNavigationBarItem({
     required IconData icon,
     required String label,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A container with rounded corners and a white background.
 class WhiteRoundedContainer extends StatelessWidget {
   final Widget child;
 

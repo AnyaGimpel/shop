@@ -3,14 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop/blocs/cart_cubit.dart';
 import 'package:shop/models/cart_item.dart';
 
+/// Widget that displays a cart indicator with the total number of items in the cart.
 class CartIndicator extends StatelessWidget {
   const CartIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Listens to the CartCubit state to get the cart items
     return BlocBuilder<CartCubit, List<CartItem>>(
       builder: (context, cartState) {
-        // Получаем общее количество товаров в корзине
+        // Gets the total quantity of items in the cart
         int totalQuantity = context.read<CartCubit>().getTotalQuantity();
 
         return Positioned(

@@ -6,24 +6,30 @@ import 'package:shop/blocs/cart_cubit.dart';
 import 'package:shop/models/cart_item.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/ui/screens/product_detail_page.dart';
-import 'package:shop/ui/widgets/quantity_selector.dart'; // Добавим виджет QuantitySelector
+import 'package:shop/ui/widgets/quantity_selector.dart'; 
 
+/// A widget that displays a product item card in a grid or list format.
 class ProductItemCard extends StatelessWidget {
+  /// Product object to display its details on the card.
   final Product product;
 
   const ProductItemCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    // Calculate the width and height of UI elements based on the screen size.
     double cardWidth = MediaQuery.of(context).size.width / 2 - 15;
     double imageHeight = cardWidth * 0.5;
     double textFontSize = cardWidth * 0.07;
     double buttonPadding = cardWidth * 0.1;
     double buttonHeight = cardWidth * 0.15;
 
+    // Gesture detector to navigate to the product detail page when the card is tapped.
     return GestureDetector(
       onTap: () {
+        // Set the selected product in the ProductCubit to be used on the details page.
         context.read<ProductCubit>().selectProduct(product);
+        // Navigate to the product detail page.
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -37,6 +43,7 @@ class ProductItemCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
+            // Shadow effect for the card container
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
               blurRadius: 10,
@@ -49,6 +56,7 @@ class ProductItemCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Display the product image
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: ConstrainedBox(
@@ -59,13 +67,16 @@ class ProductItemCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: product.image,
                     fit: BoxFit.contain,
+                    // Show a loading indicator while the image loads.
                     placeholder: (context, url) =>
                         const Center(child: CircularProgressIndicator()),
+                    // Show an error icon if the image fails to load.
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                   ),
                 ),
               ),
+              // Display the title and price of the product.
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
@@ -92,41 +103,46 @@ class ProductItemCard extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // A section to manage the cart state: either show quantity controls or an "Add to Cart" button.
               Expanded(
                 child: BlocBuilder<CartCubit, List<CartItem>>(
                   builder: (context, cartState) {
-                    // Проверяем, есть ли товар в корзине
+                    // Check if the product is already in the cart.
                     bool isInCart = context.read<CartCubit>().isProductInCart(product.id);
 
+                    // If the product is already in the cart, show the quantity selector.
                     if (isInCart) {
-                      // Получаем количество товара в корзине
                       int quantity = context.read<CartCubit>().getProductQuantityInCart(product.id);
 
-                      // Если товар в корзине, показываем QuantitySelector
+                      // Display the quantity selector widget.
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: buttonPadding),
                         child: QuantitySelector(
                           quantity: quantity,
+                           // Callback for incrementing the item quantity in the cart.
                           onIncrement: () {
                             context.read<CartCubit>().incrementItem(product.id, product.title, product.thumbnail, product.price);
                           },
+                          // Callback for decrementing the item quantity in the cart.
                           onDecrement: () {
                             context.read<CartCubit>().decrementItem(product.id);
                           },
+                          // Callback for removing the item from the cart.
                           onRemoveItem: () {
                             context.read<CartCubit>().removeItem(product.id);
                           },
 
-                          buttonSize: buttonHeight,  // Увеличиваем размер кнопок
+                          buttonSize: buttonHeight,  
                           textSize: buttonHeight / 2,
                         ),
                       );
                     } else {
-                      // Если товара нет в корзине, показываем кнопку "Add to Cart"
+                      // If the product is not in the cart, show the "Add to Cart" button.
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: buttonPadding),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,  // Центрируем кнопку
+                          mainAxisAlignment: MainAxisAlignment.center,  
                           children: [
                             ElevatedButton(
                               onPressed: () {

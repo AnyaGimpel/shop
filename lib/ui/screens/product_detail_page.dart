@@ -8,11 +8,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shop/ui/widgets/white_rounded_container.dart';
 import 'package:shop/ui/widgets/quantity_selector.dart';
 
+/// Screen that displays detailed information about a selected product.
 class ProductDetailPage extends StatelessWidget {
   const ProductDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // UI element size calculations
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double imageHeight = screenHeight * 0.4;
@@ -22,14 +24,17 @@ class ProductDetailPage extends StatelessWidget {
     double avatarRadius = screenWidth * 0.06;
     double iconSize = screenWidth * 0.05;
 
+    // Use BlocBuilder to display UI depending on the product state from ProductCubit.
     return BlocBuilder<ProductCubit, Product?>(
       builder: (context, product) {
+        // If no product is selected
         if (product == null) {
           return const Scaffold(
             body: Center(child: Text('No product selected')),
           );
         }
 
+        // Main UI layout
         return Scaffold(
           body: SafeArea(
             child: Stack(
@@ -39,6 +44,7 @@ class ProductDetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Displays the main product image.
                       Center(
                         child: ConstrainedBox(
                           constraints: BoxConstraints(
@@ -56,6 +62,8 @@ class ProductDetailPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
+
+                      // Displays the product title.
                       Text(
                         product.title,
                         style: TextStyle(
@@ -63,12 +71,16 @@ class ProductDetailPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
+
+                      // Displays the product description.
                       Text(
                         product.description,
                         style: TextStyle(
                             fontSize: descriptionFontSize, color: Colors.black),
                       ),
                       const SizedBox(height: 8),
+
+                      // Displays the product price.
                       Text(
                         '\$${product.price}',
                         style: TextStyle(
@@ -77,6 +89,8 @@ class ProductDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                // Back button in the top left corner to navigate back.
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
@@ -94,6 +108,8 @@ class ProductDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Bottom panel with "Add to Cart" button or quantity controls.
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: SizedBox(
@@ -101,14 +117,16 @@ class ProductDetailPage extends StatelessWidget {
                     width: screenWidth,
                     child: WhiteRoundedContainer(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 10 ),
+                        
+                        // Controls adding/removing product from cart.
                         child: BlocBuilder<CartCubit, List<CartItem>>(
                           builder: (context, cartState) {
+                            // Check if the product is already in the cart.
                             bool isInCart = context
                                 .read<CartCubit>()
                                 .isProductInCart(product.id);
-
+                            // If the product is in the cart, show quantity selector.
                             if (isInCart) {
                               int quantity = context
                                   .read<CartCubit>()
@@ -120,6 +138,7 @@ class ProductDetailPage extends StatelessWidget {
                                   width: screenWidth * 0.6,
                                   child: QuantitySelector(
                                     quantity: quantity,
+                                    // Increment the product quantity in the cart.
                                     onIncrement: () {
                                       context.read<CartCubit>().incrementItem(
                                           product.id,
@@ -127,11 +146,13 @@ class ProductDetailPage extends StatelessWidget {
                                           product.thumbnail,
                                           product.price);
                                     },
+                                    // Decrement the product quantity in the cart.
                                     onDecrement: () {
                                       context
                                           .read<CartCubit>()
                                           .decrementItem(product.id);
                                     },
+                                    // Remove the product from the cart.
                                     onRemoveItem: () {
                                       context
                                           .read<CartCubit>()
@@ -144,6 +165,7 @@ class ProductDetailPage extends StatelessWidget {
                                 ),
                               );
                             } else {
+                              // If the product is not in the cart, show "Add to Cart" button.
                               return ElevatedButton(
                                 onPressed: () {
                                   context.read<CartCubit>().addItem(

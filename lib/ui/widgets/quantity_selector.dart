@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
 
+/// A widget to handle the display of product quantity and actions (increment, decrement, and remove).
 class QuantitySelector extends StatelessWidget {
+  /// The current quantity of the item in the cart.
   final int quantity;
-  final VoidCallback onIncrement;
-  final VoidCallback onDecrement;
-  final VoidCallback onRemoveItem;
-  final double buttonSize; // Параметр для размера кнопок
-  final double textSize;   // Параметр для размера текста
-  final double spacing;    // Новый параметр для дополнительного отступа
 
+  /// Callback to increment the quantity.
+  final VoidCallback onIncrement;
+
+  /// Callback to decrement the quantity.
+  final VoidCallback onDecrement;
+
+  /// Callback to remove the item from the cart.
+  final VoidCallback onRemoveItem;
+
+  ///Size of the increment/decrement buttons.
+  final double buttonSize; 
+
+  /// Size of the quantity text.
+  final double textSize;   
+
+  /// Spacing between the elements.
+  final double spacing;   
+
+  /// Constructor to initialize the parameters for the widget.
   const QuantitySelector({
     super.key,
     required this.quantity,
@@ -27,6 +42,7 @@ class QuantitySelector extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Decrement button with styling.
           Container(
             width: buttonSize,
             height: buttonSize,
@@ -45,11 +61,15 @@ class QuantitySelector extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
+
+          // Display the current quantity.
           Text(
             quantity.toString(),
             style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 8),
+
+          // Increment button with styling.
           Container(
             width: buttonSize,
             height: buttonSize,
@@ -68,6 +88,8 @@ class QuantitySelector extends StatelessWidget {
             ),
           ),
           SizedBox(width: spacing),  
+
+          // Delete button to remove the item from the cart.
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: onRemoveItem,
